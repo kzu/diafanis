@@ -1,3 +1,5 @@
+# Diafanis y Fundación
+
 * Usuarios navegan una pagina para descubrir proyectos que buscan donaciones
 * Seleccionan uno, y antes de donar, deben ingresar o registrarse
 * Esto se hace usando login social (Google, Microsoft, Apple?) y el siguiente proceso tiene 
