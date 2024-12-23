@@ -23,8 +23,8 @@
 * Cuando el monto impacta en la cuenta del proyecto, se dispara un proceso que emite un recibo 
   digital que el usuario debe firmar con su PIN (se envía una notificación por mail, y opcionalmente 
   por WhatsApp si registro su numero). La firma electronica (hash) de este recibo se almacena en 
-  el blockchain como un asset (similar a un NFT) conteniendo la identidad de la organización que 
-  lo emite (via su firma privada). 
+  el blockchain como un [asset](https://developer.algorand.org/articles/algorand-standard-assets/) 
+  (similar a un NFT) conteniendo la identidad de la organización que lo emite (via su firma privada). 
 * El usuario que recibe el recibo, solo puede accederlo/descargarlo después de ingresar su PIN 
   para confirmar su identidad. En este paso, se crea a su vez un asset en el blockchain con el 
   mismo hash del recibo, pero firmado por el usuario (con su clave privada). Esto vincula a 
@@ -45,7 +45,8 @@
   requiere una rendición del gasto correspondiente. Puede tratarse de una foto de un ticket, 
   una factura, etc. El receptor, al igual que el usuario que dono, debe firmar el documento 
   con su PIN para confirmar su identidad. Este proceso es similar al de la aceptación del 
-  recibo de una donación (hash en asset en el blockchain a su nombre).
+  recibo de una donación (hash en [asset](https://developer.algorand.org/articles/algorand-standard-assets/) 
+  en el blockchain a su nombre).
 
 El servicio de interacción con el blockchain (Diafanis de ahora en mas) es un servicio utilizado 
 exclusivamente por el sitio web para crear cuentas, registrar y firmar documentos, y verificar 
@@ -89,9 +90,9 @@ graph TD
    como la fecha 
 1. Ingresa a la pagina de Diafanis y sube el documento
 2. Diafanis calcula el hash del documento y busca en el blockchain si existe 
-   un asset con ese hash
-3. Si existe, Diafanis devuelve la información del/los asset (hash y fecha), 
-   dado que el mismo documente aparecerá como asset asociado a cada usuario 
+   un [asset](https://developer.algorand.org/articles/algorand-standard-assets/) con ese hash
+3. Si existe, Diafanis devuelve la información del/los [asset](https://developer.algorand.org/articles/algorand-standard-assets/)
+   (hash y fecha), dado que el mismo documente aparecerá como asset asociado a cada usuario 
    que lo recibió y firmo. 
 4. Dado que la información personal de los individuos no existe en el blockchain, 
    el usuario debe tener acceso al DNI escaneado de las partes involucradas 
@@ -102,15 +103,26 @@ graph TD
 ### Diagrama Verification
 
 ```mermaid
-flowchart TD
-    A[Usuario tiene un documento y quiere verificar<br>su autenticidad y fecha]
-    A --> B[Usuario ingresa a la página de Diafanis<br>y sube el documento]
-    B --> C[Diafanis calcula el hash del documento]
-    C --> D[Diafanis busca en el blockchain si existe<br>un asset con ese hash]
-    D --> E{¿Existe el hash en el blockchain?}
-    E -- Sí --> F[Diafanis muestra información del asset:<br>hash y fecha]
-    E -- No --> G[Diafanis informa que el documento no está<br>registrado en el blockchain]
-    F --> H[El documento aparece como asset asociado<br>a cada usuario que lo recibió y firmó]
-    H --> I[Usuario puede ver cuántas partes<br>están involucradas y fechas de firma]
-    I --> J[Para confirmar firmantes, usuario necesita<br>DNIs escaneados de las partes involucradas]
+graph TD
+    A[Usuario con documento] --> B[Ingresa a la página de Diafanis]
+    B --> C[Sube el documento]
+    C --> D[Diafanis calcula hash del documento]
+    D --> E[Busca en blockchain asset con ese hash]
+    E --> F{¿Existe asset?}
+    F -->|Sí| G[Devuelve información del asset]
+    G --> H[Muestra hash y fecha]
+    G --> I[Indica número de partes involucradas]
+    G --> J[Muestra fechas de firma de cada parte]
+    F -->|No| K[Documento no verificado]
+    H --> L[Usuario verifica DNI escaneados]
+    I --> L
+    J --> L
+    L --> M[Confirma autenticidad y firmantes]
 ```
+
+
+
+## Referencias
+
+- [Por qué Algorand](https://developer.algorand.org/docs/get-started/basics/why_algorand/)
+- [Algorand Standard Assets](https://developer.algorand.org/articles/algorand-standard-assets/)
