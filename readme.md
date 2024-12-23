@@ -53,6 +53,8 @@ la autenticidad de los mismos. El sitio web de la fundacion se encarga de la int
 para alta/baja de proyectos, donaciones, etc. y de la interaccion con los usuarios. Diafanis 
 provee una API REST para que el sitio web pueda interactuar con el blockchain de forma segura.
 
+## Diagramas
+
 ```mermaid
 graph TD
     A[Usuario navega proyectos de recaudación de fondos en el sitio web]
